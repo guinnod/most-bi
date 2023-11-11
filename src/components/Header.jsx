@@ -17,15 +17,15 @@ export const Header = () => {
 		<div className="flex px-20 justify-between bg-white shadow-xl py-4">
 			<div>
 				<Image
-					className={`cursor-pointer min-h-[60px] min-w-[60px] `}
+					className={`cursor-pointer`}
 					src={`/images/most.png`}
 					style={{
 						objectFit: "cover",
 						objectPosition: "center",
 					}}
 					alt={`most.png`}
-					width={60}
-					height={60}
+					width={80}
+					height={80}
 					loading="eager"
 				/>
 			</div>
@@ -33,7 +33,7 @@ export const Header = () => {
 				{links?.map((item, key) => (
 					<Link
 						href={item.href}
-						className="text-xl text-[#bd302d] "
+						className="text-lg text-[#bd302d] "
 						key={key}
 					>
 						{item.title}
@@ -44,7 +44,7 @@ export const Header = () => {
 				<h2 className="text-[#bd302d]">Apply for W2024 batch</h2>
 				<Link
 					href={"https://tally.so/r/mRDGOd"}
-					className="bg-[#bd302d] py-5 px-8 flex justify-center items-center rounded-xl hover:bg-[#eb4432]"
+					className="bg-[#bd302d] py-4 px-6 flex justify-center items-center rounded-xl hover:bg-[#eb4432]"
 				>
 					<h2 className="text-white text-lg font-bold">Apply</h2>
 				</Link>
