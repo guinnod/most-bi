@@ -219,7 +219,7 @@ const columns = [
                 <br></br>
                 <div>
                     {" "}
-                    <b>Кто ваши конкуренты</b> {data?.concurents?.value}
+                    <b>Кто ваши конкуренты?</b> {data?.concurents?.value}
                 </div>
                 <br></br>
                 <div>
@@ -229,6 +229,13 @@ const columns = [
                 </div>
             </div>
         ),
+    },
+    {
+        title: "Score",
+        render: (data) => <div> {data?.score || 0}</div>,
+        sorter: (a, b) => {
+            return Number(a.score) - Number(b.score);
+        },
     },
 ];
 

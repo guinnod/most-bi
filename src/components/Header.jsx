@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const Header = () => {
     const [links, setLinks] = useState([
@@ -13,6 +13,14 @@ export const Header = () => {
         { title: "Library", href: "" },
         { title: "Resources", href: "" },
     ]);
+    const [a, sA] = useState(false);
+    useEffect(() => {
+        if (
+            window.location.href.includes("admin") &&
+            localStorage["auth"] == "True"
+        )
+            sA(true);
+    }, []);
     return (
         <div className="flex px-20 justify-between bg-white shadow-xl py-4">
             <div className="flex items-center justify-center overflow-hidden w-[80px] h-[80px]">
@@ -41,9 +49,22 @@ export const Header = () => {
                 ))}
             </div>
             <div className="flex gap-6 items-center justify-center">
-                <Link href={"/admin"}>
-                    <h2 className="text-[#bd302d]">Admin</h2>
-                </Link>
+                {!a ? (
+                    <Link href={"/admin"}>
+                        <h2 className="text-[#bd302d]">Admin</h2>
+                    </Link>
+                ) : (
+                    <Link href={"/"}>
+                        <h2
+                            className="text-[#bd302d] cursor-pointer"
+                            onClick={() => {
+                                localStorage["auth"] = "";
+                            }}
+                        >
+                            Logout
+                        </h2>
+                    </Link>
+                )}
                 <Link
                     href={"https://tally.so/r/mRDGOd"}
                     className="bg-[#bd302d] py-4 px-6 flex justify-center items-center rounded-xl hover:bg-[#eb4432]"
