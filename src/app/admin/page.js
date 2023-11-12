@@ -109,7 +109,7 @@ export default function Admin() {
     const fetchData = async () => {
         try {
             const { data: axiosData } = await axios.get(
-                "http://localhost:5000/get-all"
+                "https://most-back.vercel.app/get-all"
             );
             setData(axiosData.map((e, key) => ({ key, ...e })));
         } catch (error) {}
