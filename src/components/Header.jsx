@@ -41,7 +41,9 @@ export const Header = () => {
                 ))}
             </div>
             <div className="flex gap-6 items-center justify-center">
-                <h2 className="text-[#bd302d]">Apply for W2024 batch</h2>
+                <Link href={"/admin"}>
+                    <h2 className="text-[#bd302d]">Admin</h2>
+                </Link>
                 <Link
                     href={"https://tally.so/r/mRDGOd"}
                     className="bg-[#bd302d] py-4 px-6 flex justify-center items-center rounded-xl hover:bg-[#eb4432]"

@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const Main = () => {
     return (
-        <div className="flex h-screen pb-20">
+        <div className="flex h-screen">
             <div className="w-1/2 p-20 flex flex-col justify-center  gap-6 ">
                 <h2 className="text-5xl text-[#bd302d] uppercase">
                     why Most Business Intelligence?

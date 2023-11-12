@@ -8,23 +8,34 @@ const columns = [
         title: "CEO",
         render: (data) => (
             <div>
-                <div>Name: {data?.full_name?.value}</div>
-                <div>Age: {data?.age?.value}</div>
-                <div>Gender: {data?.gender?.value}</div>
-                <div>Position: {data?.isCEO?.value ? "CEO" : "Worker"}</div>
+                <div>
+                    <b>Name:</b> {data?.full_name?.value}
+                </div>
+                <div>
+                    <b>Age:</b> {data?.age?.value}
+                </div>
+                <div>
+                    <b>Gender:</b> {data?.gender?.value}
+                </div>
+                <div>
+                    <b>Position:</b> {data?.isCEO?.value ? "CEO" : "CEO, CTO"}
+                </div>
             </div>
         ),
     },
     {
-        title: "Startup",
+        title: "Project",
         render: (data) => (
             <div>
-                <div>Lifetime: {data?.lifetime?.value}</div>
+                <div>
+                    <b> Lifetime:</b> {data?.lifetime?.value}
+                </div>
                 <div className="max-w-sm">
-                    Main job: {data?.main_job?.value}
+                    <b>Description: </b>
+                    {data?.main_job?.value}
                 </div>
                 <div>
-                    Pitchdeck:{" "}
+                    <b>Pitchdeck:</b>{" "}
                     <Link
                         className="text-indigo-600"
                         href={data?.pitchdeck?.value[0]?.url || ""}
@@ -36,6 +47,7 @@ const columns = [
             </div>
         ),
     },
+
     {
         title: "Tech",
         render: (data) => (
@@ -43,6 +55,35 @@ const columns = [
                 <div>{data?.tech?.value}</div>
             </div>
         ),
+        filters: [
+            {
+                value: "EdTech",
+                text: "EdTech",
+            },
+            {
+                value: "FinTech",
+                text: "FinTech",
+            },
+            {
+                value: "MedTech",
+                text: "MedTech",
+            },
+            {
+                value: "E-Commerce",
+                text: "E-Commerce",
+            },
+            {
+                value: "AI & ML",
+                text: "AI & ML",
+            },
+            {
+                value: "Blockchain",
+                text: "Blockchain",
+            },
+        ],
+        onFilter: (value, record) => {
+            return record.tech?.value == value;
+        },
     },
     {
         title: "Stage",
@@ -51,9 +92,38 @@ const columns = [
                 <div> {data?.stage?.value}</div>
             </div>
         ),
+        filters: [
+            {
+                text: "MVP",
+                value: "MVP",
+            },
+            {
+                text: "Идея",
+                value: "Идея",
+            },
+            {
+                text: "Пилотное тестирование",
+                value: "Пилотное тестирование",
+            },
+            {
+                text: "PMF",
+                value: "PMF",
+            },
+            {
+                text: "Масштабирование",
+                value: "Масштабирование",
+            },
+            {
+                text: "Расширение",
+                value: "Расширение",
+            },
+        ],
+        onFilter: (value, record) => {
+            return record.stage?.value == value;
+        },
     },
     {
-        title: "Investmented",
+        title: "Invested",
         render: (data) => (
             <div>
                 <div>
@@ -63,9 +133,22 @@ const columns = [
                 </div>
             </div>
         ),
+        filters: [
+            {
+                value: "Да",
+                text: "True",
+            },
+            {
+                value: "Нет",
+                text: "False",
+            },
+        ],
+        onFilter: (value, record) => {
+            return record.isInvestmented?.value == value;
+        },
     },
     {
-        title: "isInProduction",
+        title: "Production",
         render: (data) => (
             <div>
                 <div>
@@ -75,9 +158,22 @@ const columns = [
                 </div>
             </div>
         ),
+        filters: [
+            {
+                value: "Да",
+                text: "True",
+            },
+            {
+                value: "Нет",
+                text: "False",
+            },
+        ],
+        onFilter: (value, record) => {
+            return record.isInProduction?.value == value;
+        },
     },
     {
-        title: "isInRound",
+        title: "Fundraising",
         render: (data) => (
             <div>
                 <div>
@@ -87,14 +183,50 @@ const columns = [
                 </div>
             </div>
         ),
+        filters: [
+            {
+                value: "Да",
+                text: "True",
+            },
+            {
+                value: "Нет",
+                text: "False",
+            },
+        ],
+        onFilter: (value, record) => {
+            return record.isInRound?.value == value;
+        },
+    },
+    {
+        title: "Users",
+        render: (data) => (
+            <div>
+                <div>{data?.user_count?.value}</div>
+            </div>
+        ),
+        sorter: (a, b) => {
+            return Number(a.user_count.value) - Number(b.user_count.value);
+        },
     },
     {
         title: "Questions",
         render: (data) => (
             <div className="max-w-sm">
-                <div> experience: {data?.experience?.value}</div>
-                <div> concurents: {data?.concurents?.value}</div>
-                <div> users_input: {data?.users_input?.value}</div>
+                <div>
+                    {" "}
+                    <b>Почему вы выбрали эту идею?</b> {data?.experience?.value}
+                </div>
+                <br></br>
+                <div>
+                    {" "}
+                    <b>Кто ваши конкуренты</b> {data?.concurents?.value}
+                </div>
+                <br></br>
+                <div>
+                    {" "}
+                    <b>Как пользователи находят ваш продукт?</b>{" "}
+                    {data?.users_input?.value}
+                </div>
             </div>
         ),
     },
@@ -106,13 +238,18 @@ const onChange = (pagination, filters, sorter, extra) => {
 
 export default function Admin() {
     const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
     const fetchData = async () => {
         try {
+            setLoading(true);
             const { data: axiosData } = await axios.get(
                 "https://most-back.vercel.app/get-all"
             );
             setData(axiosData.map((e, key) => ({ key, ...e })));
-        } catch (error) {}
+        } catch (error) {
+        } finally {
+            setLoading(false);
+        }
     };
     useEffect(() => {
         fetchData();
@@ -124,6 +261,7 @@ export default function Admin() {
                 rowKey={(e) => e.key}
                 dataSource={data}
                 onChange={onChange}
+                loading={loading}
             />
         </div>
     );

@@ -22,7 +22,14 @@ export const AntdProvider = ({ children }) => {
     });
     return (
         <StyleProvider cache={cache}>
-            <ConfigProvider>
+            <ConfigProvider
+                theme={{
+                    token: {
+                        fontSize: 16,
+                        colorPrimary: "#bd302d",
+                    },
+                }}
+            >
                 <App>{children}</App>
             </ConfigProvider>
         </StyleProvider>
