@@ -10,7 +10,9 @@ export default function AdminLayout({ children }) {
     useEffect(() => {
         if (localStorage["auth"] == "True") sA(true);
     }, []);
-    if (localStorage["auth"] == "True" && a) return children;
+    if (a) {
+        return children;
+    }
 
     return (
         <div className="w-full flex flex-col items-center pt-20">

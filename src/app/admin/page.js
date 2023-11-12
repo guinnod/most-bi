@@ -34,10 +34,10 @@ const columns = [
                     <b>Description: </b>
                     {data?.main_job?.value}
                 </div>
-                <div>
+                <div className="max-w-[150px] overflow-hidden">
                     <b>Pitchdeck:</b>{" "}
                     <Link
-                        className="text-indigo-600"
+                        className="text-indigo-600 max-w-[150px] text-ellipsis w-[100px] overflow-hidden"
                         href={data?.pitchdeck?.value[0]?.url || ""}
                         target="_blank"
                     >
@@ -232,7 +232,7 @@ const columns = [
     },
     {
         title: "Score",
-        render: (data) => <div> {data?.score || 0}</div>,
+        render: (data) => <div> {data.score}</div>,
         sorter: (a, b) => {
             return Number(a.score) - Number(b.score);
         },
@@ -252,7 +252,13 @@ export default function Admin() {
             const { data: axiosData } = await axios.get(
                 "https://most-back.vercel.app/get-all"
             );
-            setData(axiosData.map((e, key) => ({ key, ...e })));
+            setData(
+                axiosData
+                    .map((e, key) => ({ key, ...e }))
+                    .map((eel) => {
+                        return { score: 8, ...eel };
+                    })
+            );
         } catch (error) {
         } finally {
             setLoading(false);
